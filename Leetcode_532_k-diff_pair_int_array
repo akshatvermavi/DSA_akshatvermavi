@@ -1,0 +1,85 @@
+//Leetcode Method 01 via set TC = O(nlog(n))
+class Solution {
+public:
+    int findPairs(vector<int>& nums, int k) {
+        sort(nums.begin(),nums.end());
+        set<pair<int,int>>ans;
+        int i=0,j=1;
+        //int count=0;
+        while(j<nums.size())
+        {
+            int diff = nums[j] - nums[i];
+            if(diff==k)
+            {
+              //  cout<<nums[i]<<" "<<nums[j]<<endl;
+                ans.insert({nums[i],nums[j]});
+                //count++;
+                ++i,++j;
+            }
+            else if(diff>k)
+            {
+                i++;
+            }
+            else
+            {
+                j++;
+            }
+            if(i==j) j++;
+        }
+
+        return ans.size();        
+        //return count;
+    }
+};
+
+//method 2 via Binary search
+class Solution {
+public:
+int bs(vector<int> nums, int start,int x)
+{
+    int end = nums.size() - 1;
+    while(start<=end){
+    int mid = (start + end)/2;
+    if(nums[mid] == x)
+    return mid;
+    else if(x > nums[mid])
+     start =mid +1;
+    else
+    {
+        end = mid-1;
+    }
+    }
+    return -1;
+}
+
+int findPairs(vector<int>& nums, int k) {
+    sort(nums.begin(),nums.end());
+    set<pair<int,int>>ans;
+    for(int i=0;i<nums.size();i++)
+    {
+        if(bs(nums, i+1, nums[i]+k) !=-1)
+        {
+            ans.insert({nums[i], nums[i] +k});
+        }
+
+    }
+    return ans.size();
+}
+};
+
+// Method-03 Brute force way TC = O(n^2)
+class Solution {
+public:
+int bs(vector<int> nums, int start,int x)
+{
+    for(int i=0;i<nums.size();i++)
+    {
+        for(int j = i+1;j<n ;j++)
+        {
+            if(abs(nums[i]-nums[j])==k)
+            count++;
+        }
+    }
+    return count;
+}
+};
