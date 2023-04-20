@@ -1,0 +1,57 @@
+//Coding ninjas frog jump
+
+//method 01
+
+class Solution {
+public:
+
+    int f(int ind, vector<int> &stones)
+    {
+        if(ind == 0) return 0;
+        if(dp[ind] != -1) return dp[ind];
+        int left = f(ind -1, stones) + abs(stones(ind) - stones(ind -1));
+        int right = INT_MAX;
+        if(ind >1)
+        right = f(ind-2,stones) + abs(stones(ind) - stones(ind -1));
+        return dp[ind] = min(left,right);
+    }
+    bool canCross(vector<int>& stones) {
+        vector<int> dp[n=1, -1];
+
+        return f(n-1, stones);
+
+    }
+};
+
+// method 02 via using last and second last element considering\
+
+class Solution {
+public:
+
+    int f(int ind, vector<int> &stones)
+    {
+        int prev1= 0;
+        int prev2 =0;
+        for(int i=2;i<=n;i++)
+        {
+        
+        int fs = prev1 + abs(height[i] - height[i-1]);
+        int ss = INT_MAX;
+        if(i>1){
+        ss= prev2 + abs(height[i] - height[i-2]);
+        
+        }
+        int curi = min(fs,ss);
+        prev2 = prev1;
+        prev1 = curi;
+
+        }
+        return prev1;
+    }
+    bool canCross(vector<int>& stones) {
+        vector<int> dp[n=1, -1];
+
+        return f(n-1, stones);
+
+    }
+};
